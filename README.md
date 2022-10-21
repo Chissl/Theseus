@@ -3,7 +3,7 @@
     <img align="right" alt="Download" height="75" src="https://raw.githubusercontent.com/gurrenm3/BTD-Mod-Helper/master/BloonsTD6%20Mod%20Helper/Resources/DownloadBtn.png">
 </a>
 
-<h1 align="center">Theseus</h1>
+<h1 align="center">The Adventurer</h1>
 
 This mod adds Theseus, a custom Hero tower that excels at boss events with his array of laser weapons.
 
