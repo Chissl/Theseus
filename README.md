@@ -8,9 +8,13 @@
 This mod adds Theseus, a custom Hero tower that excels at boss events with his array of laser weapons.
 
 Tips:
+
 Theseus levels slowly, so it is advised to use your extra money to level him up.
+
 Theseus causes boss bloons to take more damage, so set his targeting to strong when a boss in on screen and in range.
+
 Theseus's orbital strike can clear entire waves of bloons if its targeting and timing is correct.
+
 Theseus gains extra cash per pop (x2 from lvl 1-8 and x4 at lvl 9+), so make sure he is getting as many pops as possible.
 
 Contact Chiss#5306 on Discord if you have suggestions or feedback about the hero!
