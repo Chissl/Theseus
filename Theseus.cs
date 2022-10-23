@@ -31,7 +31,6 @@ namespace Theseus
         public override string NameStyle => TowerType.Gwendolin;
         public override int MaxLevel => 20;
         public override float XpRatio => 2f;
-        public override int Abilities => 2;
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
@@ -223,7 +222,7 @@ namespace Theseus
                 explosion.AddBehavior(superbrittle);
                 projectile.AddBehavior(superbrittle);
                 var lasershock = Game.instance.model.GetTowerFromId("DartlingGunner-200").GetDescendant<AddBehaviorToBloonModel>().Duplicate();
-                lasershock.filters = null;
+                //lasershock.filters = null;
                 lasershock.GetBehavior<DamageOverTimeModel>().damage = 0;
                 lasershock.lifespan = superbrittle.lifespan * 1.5f;
                 explosion.AddBehavior(lasershock);
@@ -243,11 +242,12 @@ namespace Theseus
                 superbrittle.perHitDamageAddition = 2;
                 superbrittle.lifespan = 3;
                 superbrittle.mutationId = "BasicDebuff";
-                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(superbrittle);
                 var lasershock = Game.instance.model.GetTowerFromId("DartlingGunner-200").GetDescendant<AddBehaviorToBloonModel>().Duplicate();
-                lasershock.filters = null;
                 lasershock.GetBehavior<DamageOverTimeModel>().damage = 0;
+                lasershock.lifespan = superbrittle.lifespan;
                 towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(lasershock);
+                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(superbrittle);
+                towerModel.GetAttackModel().weapons[0].projectile.collisionPasses = new[] { 0, 1 };
             }
         }
         public class L12 : ModHeroLevel<Theseus>
@@ -257,13 +257,16 @@ namespace Theseus
 
             public override void ApplyUpgrade(TowerModel towerModel)
             {
-                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Ceramic", "Ceramic", 1, 4, false, true));
-                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Fortified", "Fortified", 1, 3, false, true));
-                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 6, false, true));
-                towerModel.GetAttackModel().weapons[0].projectile.GetDamageModel().damage += 3;
-                towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Fortified", "Fortified", 1, 3, false, true));
-                towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Ceramic", "Ceramic", 1, 3, false, true));
-                towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 8, false, true));
+                var projectile = towerModel.GetAttackModel().weapons[0].projectile;
+                var ability1projectile = towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile;
+                projectile.AddBehavior(new DamageModifierForTagModel("Ceramic", "Ceramic", 1, 4, false, true));
+                projectile.AddBehavior(new DamageModifierForTagModel("Fortified", "Fortified", 1, 3, false, true));
+                projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 6, false, true));
+                projectile.GetDamageModel().damage += 3;
+                ability1projectile.AddBehavior(new DamageModifierForTagModel("Fortified", "Fortified", 1, 3, false, true));
+                ability1projectile.AddBehavior(new DamageModifierForTagModel("Ceramic", "Ceramic", 1, 3, false, true));
+                ability1projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 8, false, true));
+
             }
         }
         public class L13 : ModHeroLevel<Theseus>
@@ -405,6 +408,12 @@ namespace Theseus
                 var archimedes = towerModel.GetAbility(0).Duplicate();
                 archimedes.icon = GetSpriteReference(mod, "ProjectArchimedes-Icon");
                 //archimedes.GetBehavior<ActivateAttackModel>().attacks[0] = Game.instance.model.GetTowerFromId("MortarMonkey-002").GetAttackModel(0).Duplicate();
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].fireWithoutTarget = true;
+                archimedes.GetBehavior<ActivateAttackModel>().cancelIfNoTargets = false;
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].RemoveBehavior<TargetSelectedPointModel>();
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].targetProvider = new CloseTargetTrackModel("", 999999, false, false, 0);
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].AddBehavior(new CloseTargetTrackModel("", 999999, false, false, 0));
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].rate = .05f;
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile = Game.instance.model.GetTowerFromId("MonkeyAce-050").GetAttackModel(1).weapons[0].projectile.Duplicate();
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<FallToGroundModel>().timeToTake = 10;
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.display = new() { guidRef = "" };
@@ -423,20 +432,19 @@ namespace Theseus
                 dummy.display = new() { guidRef = "Point Light" };
                 dummy.GetBehavior<DisplayModel>().display = new() { guidRef = "Point Light" };
                 dummy.RemoveBehavior<RangeSupportModel>();
-                dummy.AddBehavior(new TowerExpireModel("", 13.5f, 1, true, true));
+                dummy.AddBehavior(new TowerExpireModel("", 13.5f, 1, false, false));
                 dummy.doesntRotate = true;
-                lighteffect.rate = 999999;
-                lighteffect.projectile.AddBehavior(new CreateTowerModel("", dummy, 0, true, false, false, false, false));
+                lighteffect.fireWithoutTarget = true;
+                lighteffect.rate = 30;
+                lighteffect.projectile.AddBehavior(new CreateTowerModel("", dummy, 0, true, true, false, false, true));
                 lighteffect.projectile.RemoveBehavior<CreateEffectOnExhaustFractionModel>();
                 lighteffect.projectile.RemoveBehavior<CreateProjectileOnExhaustFractionModel>();
                 //lighteffect.projectile.GetBehavior<CreateEffectOnExpireModel>().assetId = new() { guidRef = "Laser" };
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].AddWeapon(lighteffect);
                 archimedes.name = "Archimedes II";
                 archimedes.displayName = "Archimedes II";
-                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].rate = .05f;
                 archimedes.GetBehavior<ActivateAttackModel>().lifespan = 1;
-                archimedes.cooldown = 180;
-
+                archimedes.cooldown = 240;
                 var abilitydisplay = Game.instance.model.GetTowerFromId("MonkeyAce-050").GetAbility(0).GetBehaviors<CreateEffectOnAbilityModel>()[1].Duplicate();
                 //abilitydisplay.effectModel.lifespan = archimedes.GetBehavior<ActivateAttackModel>().lifespan;
 
