@@ -109,7 +109,8 @@ public class WeaponSpawnDart_Patch
         //MelonLogger.Msg(__instance.attack.tower.towerModel.name);
         if (__instance.attack.tower.towerModel.name.StartsWith("Theseus"))
         {
-            __instance.attack.tower.Node.graphic.GetComponent<Animator>().Play("AttackR", 0, 1-(.5f*__instance.attack.tower.towerModel.GetAttackModel().weapons[0].rate));
+            __instance.attack.tower.Node.graphic.GetComponent<Animator>().Play("AttackR"
+                , 0, 1-(.5f*__instance.attack.tower.towerModel.GetAttackModel().weapons[0].rate));
         }
     }
 }

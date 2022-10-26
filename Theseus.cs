@@ -413,13 +413,14 @@ namespace Theseus
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].RemoveBehavior<TargetSelectedPointModel>();
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].targetProvider = new CloseTargetTrackModel("", 999999, false, false, 0);
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].AddBehavior(new CloseTargetTrackModel("", 999999, false, false, 0));
-                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].rate = .05f;
+
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile = Game.instance.model.GetTowerFromId("MonkeyAce-050").GetAttackModel(1).weapons[0].projectile.Duplicate();
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<FallToGroundModel>().timeToTake = 10;
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.display = new() { guidRef = "" };
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<DisplayModel>().display = new() { guidRef = "" };
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.GetDamageModel().damage = 100000;
-                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 200000, false, true));
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.pierce = 10000;
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 250000, false, true));
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.radius = 999999;
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.display = new() { guidRef = "" };
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.GetBehavior<DisplayModel>().display = new() { guidRef = "" };
@@ -443,6 +444,7 @@ namespace Theseus
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].AddWeapon(lighteffect);
                 archimedes.name = "Archimedes II";
                 archimedes.displayName = "Archimedes II";
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].rate = .05f;
                 archimedes.GetBehavior<ActivateAttackModel>().lifespan = 1;
                 archimedes.cooldown = 240;
                 var abilitydisplay = Game.instance.model.GetTowerFromId("MonkeyAce-050").GetAbility(0).GetBehaviors<CreateEffectOnAbilityModel>()[1].Duplicate();
