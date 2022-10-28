@@ -3,19 +3,24 @@
     <img align="right" alt="Download" height="75" src="https://raw.githubusercontent.com/gurrenm3/BTD-Mod-Helper/master/BloonsTD6%20Mod%20Helper/Resources/DownloadBtn.png">
 </a>
 
-<h1 align="center">Theseus, The Adventurer</h1>
+<h1 align="center">Theseus</h1>
 
 This mod adds Theseus, a custom Hero tower that excels at boss events with his array of laser weapons.
 
-Tips:
+This version of the Thesues contains improved balancing with reduced cash generation, lower damage and pierce, and slower hero leveling. Overall, while Theseus still has good offensive power, especially with his abilities, he acts more like a support tower at lower levels by weakening bloons and generating cash.
 
-Theseus levels slowly, so it is advised to use your extra money to level him up.
+Notable Changes:
+Price 975 => 1250
+Base Pierce 4 => 2
+Base Damage 2 => 1
+Base Cash Generation 2 => 1.75
+Lvl 9 Cash Generation 4 => 2.625
+Project Archimedes Normal Boss Damage 7 million => 1.5 million
+Project Archimedes Elite Boss Damage 7 million => 4.5 million
 
-Theseus causes boss bloons to take more damage, so set his targeting to strong when a boss in on screen and in range.
+Overall, Theseus is still kinda OP, but less so
 
-Theseus's orbital strike can clear entire waves of bloons if its targeting and timing is correct.
 
-Theseus gains extra cash per pop (x2 from lvl 1-8 and x4 at lvl 9+), so make sure he is getting as many pops as possible.
 
 Contact Chiss#5306 on Discord if you have suggestions or feedback about the hero!
 

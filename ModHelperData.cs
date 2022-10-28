@@ -2,8 +2,8 @@ namespace Theseus;
 
 public static class ModHelperData
 {
-    public const string Version = "1.0.3";
-    public const string Name = "Theseus";
+    public const string Version = "1.0.0";
+    public const string Name = "Theseus (Balanced)";
 
     public const string Description = "Adds Theseus, an adventurer with a powerful arsenal of laser weapons!";
 

@@ -23,21 +23,21 @@ namespace Theseus
     {
         public override string BaseTower => "EngineerMonkey";
         public override string Name => "Theseus";
-        public override int Cost => 975;
+        public override int Cost => 1250;
         public override string DisplayName => "Theseus";
         public override string Title => "The Adventurer";
         public override string Level1Description => "Pops bloons with his laser guns, getting extra cash per pop.";
         public override string Description => "With equipment and experience from his decades of scouring the Bloon Wasteland, Theseus decimates bloons with his powerful collection of laser weapons. Tip: Use your extra cash to level up this hero.";
         public override string NameStyle => TowerType.Gwendolin;
         public override int MaxLevel => 20;
-        public override float XpRatio => 2f;
+        public override float XpRatio => 3.2f;
 
         public override void ModifyBaseTowerModel(TowerModel towerModel)
         {
             towerModel.range = 40;
             towerModel.GetAttackModel().range = 40;
 
-            towerModel.AddBehavior(new CashIncreaseModel("CashIncrease", 0, 2f)); //remember to set back to 2
+            towerModel.AddBehavior(new CashIncreaseModel("CashIncrease", 0, 1.75f)); //remember to set back to 2
 
             towerModel.display = new() { guidRef = "TheseusBase-Prefab" }; //required for custom displays to be recognized
             towerModel.GetBehavior<DisplayModel>().display = new() { guidRef = "TheseusBase-Prefab" }; //required for custom displays to be recognized
@@ -46,8 +46,8 @@ namespace Theseus
             towerModel.radius = 8;
             var weapons = towerModel.GetAttackModel().weapons[0];
             weapons.rate = .6f;
-            weapons.projectile.pierce = 4;
-            weapons.projectile.GetDamageModel().damage = 2;
+            weapons.projectile.pierce = 2;
+            weapons.projectile.GetDamageModel().damage = 1;
             weapons.projectile.RemoveBehavior<SlowOnPopModel>();
             weapons.projectile.GetDamageModel().immuneBloonProperties = BloonProperties.Purple;
             weapons.projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 3, false, true));
@@ -63,7 +63,7 @@ namespace Theseus
 
             public override void ApplyUpgrade(TowerModel towerModel)
             {
-                towerModel.GetAttackModel().weapons[0].projectile.pierce += 3;
+                towerModel.GetAttackModel().weapons[0].projectile.pierce += 1;
             }
         }
         public class L3 : ModHeroLevel<Theseus>
@@ -127,7 +127,7 @@ namespace Theseus
             {
 
                 towerModel.GetAttackModel().weapons[0].projectile.GetDamageModel().damage += 1;
-                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 4, false, true));
+                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 6, false, true));
                 towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.GetDamageModel().damage += 2;
             }
         }
@@ -150,7 +150,7 @@ namespace Theseus
         }
         public class L7 : ModHeroLevel<Theseus>
         {
-            public override string Description => "Lasers have even more popping power. Archimedes cooldown reduced.";
+            public override string Description => "Lasers have even more popping power. Orbital Strike cooldown reduced.";
             public override int Level => 7;
 
             public override void ApplyUpgrade(TowerModel towerModel)
@@ -179,7 +179,7 @@ namespace Theseus
 
             public override void ApplyUpgrade(TowerModel towerModel)
             {
-                towerModel.GetBehavior<CashIncreaseModel>().multiplier *= 2;
+                towerModel.GetBehavior<CashIncreaseModel>().multiplier *= 1.5f;
             }
         }
         public class L10 : ModHeroLevel<Theseus>
@@ -217,7 +217,7 @@ namespace Theseus
                 var slowmodel = explosionslowmodel.Duplicate();
                 slowmodel.lifespan = 3;
                 projectile.AddBehavior(slowmodel);
-                projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 15000, false, true));
+                projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 10000, false, true));
                 ability10.cooldown = 75;
                 explosion.AddBehavior(superbrittle);
                 projectile.AddBehavior(superbrittle);
@@ -259,13 +259,13 @@ namespace Theseus
             {
                 var projectile = towerModel.GetAttackModel().weapons[0].projectile;
                 var ability1projectile = towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile;
-                projectile.AddBehavior(new DamageModifierForTagModel("Ceramic", "Ceramic", 1, 4, false, true));
-                projectile.AddBehavior(new DamageModifierForTagModel("Fortified", "Fortified", 1, 3, false, true));
-                projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 6, false, true));
-                projectile.GetDamageModel().damage += 3;
+                projectile.AddBehavior(new DamageModifierForTagModel("Ceramic", "Ceramic", 1, 3, false, true));
+                projectile.AddBehavior(new DamageModifierForTagModel("Fortified", "Fortified", 1, 2, false, true));
+                projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 9, false, true));
+                projectile.GetDamageModel().damage += 2;
                 ability1projectile.AddBehavior(new DamageModifierForTagModel("Fortified", "Fortified", 1, 3, false, true));
                 ability1projectile.AddBehavior(new DamageModifierForTagModel("Ceramic", "Ceramic", 1, 3, false, true));
-                ability1projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 8, false, true));
+                ability1projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 12, false, true));
 
             }
         }
@@ -289,14 +289,14 @@ namespace Theseus
         }
         public class L14 : ModHeroLevel<Theseus>
         {
-            public override string Description => "Lasers deal more damage to Moab-class bloons and can now pop purples.";
+            public override string Description => "Lasers deal more damage to Moab-class bloons and have slightly more popping power.";
             public override int Level => 14;
 
             public override void ApplyUpgrade(TowerModel towerModel)
             {
-                towerModel.GetAttackModel().weapons[0].projectile.GetDamageModel().immuneBloonProperties = BloonProperties.None;
+                towerModel.GetAttackModel().weapons[0].projectile.pierce += 1;
                 towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Moabs", "Moabs", 1, 4, false, false));
-                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 12, false, true));
+                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 18, false, true));
                 towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Moabs", "Moabs", 1, 12, false, true));
             }
         }
@@ -307,8 +307,8 @@ namespace Theseus
 
             public override void ApplyUpgrade(TowerModel towerModel)
             {
-                towerModel.range += 15;
-                towerModel.GetAttackModel().range += 15;
+                towerModel.range += 10;
+                towerModel.GetAttackModel().range += 10;
                 towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.radius += 10;
                 towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].GetDescendant<RandomTargetSpreadModel>().spread += 20;
                 towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.radius += 10;
@@ -330,9 +330,9 @@ namespace Theseus
                 explosionprojectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().lifespan *= 1.5f;
                 explosionprojectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().perHitDamageAddition += 3;
                 explosionprojectile.pierce += 25;
-                explosionprojectile.GetDamageModel().damage += 800;
-                projectile.GetDamageModel().damage += 4000;
-                projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 75000, false, true));
+                explosionprojectile.GetDamageModel().damage += 600;
+                projectile.GetDamageModel().damage += 3000;
+                projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 50000, false, true));
                 ability10.cooldown -= 15;
             }
         }
@@ -360,8 +360,8 @@ namespace Theseus
                 weapon.rate *= .75f;
                 weapon.projectile.GetDamageModel().damage += 2;
                 weapon.projectile.AddBehavior(new DamageModifierForTagModel("Moabs", "Moabs", 1, 10, false, false));
-                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 28, false, true));
-                weapon.projectile.pierce += 5;
+                towerModel.GetAttackModel().weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 32, false, true));
+                weapon.projectile.pierce += 3;
                 towerModel.GetAttackModel().weapons[0].projectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().perHitDamageAddition += 6;
                 towerModel.display = new() { guidRef = "Lvl18" };
                 towerModel.GetBehavior<DisplayModel>().display = new() { guidRef = "Lvl18" };
@@ -375,20 +375,20 @@ namespace Theseus
 
             public override void ApplyUpgrade(TowerModel towerModel)
             {
-                towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Moabs", "Moabs", 1, 40, false, true));
-                towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 200, false, true));
+                towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Moabs", "Moabs", 1, 30, false, true));
+                towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 250, false, true));
                 towerModel.GetAbility(0).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.GetDamageModel().damage += 15;
 
                 towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.AddBehavior(new DamageModifierForTagModel("Moabs", "Moabs", 1, 40, false, true));
-                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 30000, false, true));
+                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 20000, false, true));
                 towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetDamageModel().damage += 5000;
-                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetDamageModel().damage += 30000;
-                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 500000, false, true));
+                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetDamageModel().damage += 25000;
+                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 350000, false, true));
                 towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<SlowModel>().lifespan *= 1.5f;
                 towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<SlowModel>().lifespan *= 1.5f;
                 towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().lifespan *= 1.5f;
-                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().perHitDamageAddition *= 3;
-                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().perHitDamageAddition *= 3;
+                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnContactModel>().projectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().perHitDamageAddition *= 2;
+                towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().perHitDamageAddition *= 2;
                 towerModel.GetAbility(1).GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<AddBonusDamagePerHitToBloonModel>().lifespan *= 1.5f;
             }
         }
@@ -418,9 +418,9 @@ namespace Theseus
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<FallToGroundModel>().timeToTake = 10;
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.display = new() { guidRef = "" };
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<DisplayModel>().display = new() { guidRef = "" };
-                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.GetDamageModel().damage = 100000;
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.GetDamageModel().damage = 750000;
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.pierce = 10000;
-                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Boss", "Boss", 1, 250000, false, true));
+                archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.AddBehavior(new DamageModifierForTagModel("Elite", "Elite", 1, 150000, false, true));
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.radius = 999999;
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.display = new() { guidRef = "" };
                 archimedes.GetBehavior<ActivateAttackModel>().attacks[0].weapons[0].projectile.GetBehavior<CreateProjectileOnExhaustFractionModel>().projectile.GetBehavior<DisplayModel>().display = new() { guidRef = "" };
