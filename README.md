@@ -3,11 +3,11 @@
     <img align="right" alt="Download" height="75" src="https://raw.githubusercontent.com/gurrenm3/BTD-Mod-Helper/master/BloonsTD6%20Mod%20Helper/Resources/DownloadBtn.png">
 </a>
 
-<h1 align="center">Theseus</h1>
+<h1 align="center">Theseus (Balanced)</h1>
 
 This mod adds Theseus, a custom Hero tower that excels at boss events with his array of laser weapons.
 
-This version of the Thesues contains improved balancing with reduced cash generation, lower damage and pierce, and slower hero leveling. Overall, while Theseus still has good offensive power, especially with his abilities, he acts more like a support tower at lower levels by weakening bloons and generating cash.
+This version of the Theseus contains improved balancing with reduced cash generation, lower damage and pierce, and slower hero leveling. Overall, while Theseus still has good offensive power, especially with his abilities, he acts more like a support tower at lower levels by weakening bloons and generating cash.
 
 Notable Changes:
 Price 975 => 1250
