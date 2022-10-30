@@ -26,6 +26,7 @@ using Assets.Scripts.Simulation.Towers.Weapons;
 using BTD_Mod_Helper.Api.Display;
 using UnityEngine.UI;
 using Assets.Scripts.Simulation.Towers;
+using BTD_Mod_Helper.Api;
 
 [assembly: MelonInfo(typeof(Theseus.Main), ModHelperData.Name, ModHelperData.Version, ModHelperData.RepoOwner)]
 [assembly: MelonGame("Ninja Kiwi", "BloonsTD6")]
@@ -41,7 +42,7 @@ public class Main : BloonsTD6Mod
             MelonLogger.Msg(asset);
         //previous two lines are for debugging/finding names of assets
 
-        assetBundle = AssetBundle.LoadFromMemory(ExtractResource("doublegun.bundle"));// if using unityexplorer, there is an error, but everything still works
+        assetBundle = ModContent.GetBundle<Main>("doublegun");// if using unityexplorer, there is an error, but everything still works
         ModHelper.Msg<Main>("Theseus");
     }
 
