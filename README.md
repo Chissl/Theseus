@@ -4,6 +4,7 @@
 </a>
 
 <h1 align="center">Theseus, The Adventurer</h1>
+**THESEUS WILL APPEAR INVISIBLE ON MELONLOADER 5.7, DOWNGRADE TO MELONLOADER 5.5**
 
 This mod adds Theseus, a custom Hero tower that excels at boss events with his array of laser weapons.
 
