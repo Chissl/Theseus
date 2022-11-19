@@ -4,7 +4,7 @@
 </a>
 
 <h1 align="center">Theseus, The Adventurer</h1>
-<h2 align="center">THESEUS DOES NOT DISPLAY PROPERLY ON MELONLOADER 5.7, DOWNGRADE TO 5.5</h2>
+
 
 This mod adds Theseus, a custom Hero tower that excels at boss events with his array of laser weapons.
 
